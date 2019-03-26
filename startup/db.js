@@ -8,6 +8,7 @@ const options = {
     useNewUrlParser: true
 }
 
+//função que retorna a instancia do bando de dados
 module.exports = function (){
     if(!DB_URI) {
         logger.error('é preciso definir o DB_URI')

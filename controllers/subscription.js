@@ -9,7 +9,8 @@ const URL_API = process.env.URL_API
 
 
 exports.patchChangeCreditCard = async (req, res) => {
-
+    //alterar cartão de credito
+    //validação do body
     const {error} = validateChangeCreditCard(req.body)
     if(error) return res.status(400).send(error.details[0].message)
 
@@ -21,10 +22,13 @@ exports.patchChangeCreditCard = async (req, res) => {
         const customer = await Customer.findById(signature._idCustomer)
         if(!customer) return res.status(400).send('Cliente não encontrado.')
 
+        //obtem cartão de credito valido
         const validCreditCard = customer.getValidCreditCard()
 
+        //obtém codigo de referencia no MundiPagg
         validCreditCard.card_id = validCreditCard._idCardMP
     
+        //alteração no MundiPagg
         axios.
             patch(`${URL_API}/subscriptions/${signature._idSignatureMP}/card`,validCreditCard,{auth})
             .then(objRes => {

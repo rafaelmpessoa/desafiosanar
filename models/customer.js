@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Joi = require('joi')
 Joi.objectId  = require('joi-objectid')(Joi)
 
+//modelo de Cliente
 const customerSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -17,6 +18,7 @@ const customerSchema = new mongoose.Schema({
         required: true,
         default: 'individual'
     },
+    //os cartão de creditos são todos inseridos no mongo, mesmo com inserçaõ de novos, mantendo apenas 1 em inUse:true
     creditCard: [
         {
             number: {
@@ -45,12 +47,14 @@ const customerSchema = new mongoose.Schema({
                 type: Number,
                 required:true
             },
+            //codigo de ref no MundiPagg
             _idCardMP: {
                 type:String,
                 required: true
             }
         }
     ],
+    //codigo de referencia o cliente no MundiPagg
     _idCustomerMP:{
         type:String,
         required: true,
@@ -68,6 +72,7 @@ customerSchema.methods.getValidCreditCard = function() {
     return JSON.parse(formatedCreditCard)
 }
 
+//função para validar se o Body está correto
 function validateCustomer(customer) {
     const schema = {
         name: Joi.string().required(),
@@ -84,6 +89,7 @@ function validateCustomer(customer) {
     return Joi.validate(customer,schema)
 }
 
+//função para validar se os atributos do cartão de creditos foram passados.
 function validateNewCreditCard(customerCreditCard) {
     const schema = {
         number: Joi.string().required(),

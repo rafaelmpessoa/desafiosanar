@@ -7,9 +7,12 @@ if(process.env.NODE_ENV === 'development') require('dotenv').config()
 const URL_API = process.env.URL_API
 
 exports.postPlan = async (req, res) => {
+    //criar novo plano
     const plan = req.body
+    //validar o body
     const {error} = validateMPlan(plan)
     if(error) return res.status(400).send(error.details[0].message)
+    //inserir o plano no MundiPagg
     axios
         .post(`${URL_API}/plans`,plan,{auth})
         .then(async objres => {
@@ -17,10 +20,12 @@ exports.postPlan = async (req, res) => {
                 name: objres.data.name,
                 _idPlanMP: objres.data.id
             }
+            //obtém o codigo de referencia no MundiPagg e cria obj para ser inserido no mongo
 
             newPlan = new Plan(newPlan)
 
             try {
+                //inserção no mongo
                 const insertedPlan = await newPlan.save()
                 return res.status(200).send(insertedPlan)
 
@@ -37,6 +42,7 @@ exports.postPlan = async (req, res) => {
 
 
 exports.getAllPlans = async(req,res) => {
+    //obter todos os planos
     try{
         const plans = await Plan.find()
         return res.status(200).send(plans)

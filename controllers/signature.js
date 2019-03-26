@@ -38,6 +38,7 @@ exports.postSignatureWithPlan = async (req, res) => {
             .then(async objres => {
                 const id = objres.data.id
                 signature._idSignatureMP = id
+                //cria o obj cod Referencia no MundiPagg
                 const newSignature = new Signature(signature)
 
                 try{
@@ -69,10 +70,12 @@ exports.deleteCancelSignature = async (req, res) => {
         const subscription = await Signature.findOne({_idSignatureMP:pathSubscriptionId})
         if(!subscription) return res.status(200).send('Assinatura não encontrada.')
 
+        //deletar subscription no MundiPagg
         axios
             .delete(`${URL_API}/subscriptions/${pathSubscriptionId}`,{auth})
             .then(async objRes => {
                 try {
+                    //remover no mongo
                     const removedSub = await Signature.findOneAndDelete({_idSignatureMP:pathSubscriptionId})
                     return res.status(200).send(removedSub)
                 }catch(e){
@@ -92,7 +95,7 @@ exports.deleteCancelSignature = async (req, res) => {
 }
 
 exports.getAllSignature = async(req,res) => {
-
+    //Obtém todas as assinaturas
     try {
         const signature = await Signature.find()
         return res.status(200).send(signature)

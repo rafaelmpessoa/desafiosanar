@@ -8,6 +8,7 @@ const login = require('../routes/login');
 const customer = require('../routes/customer');
 const error = require('../middleware/error');
 
+//configurar as rotas e as funções middleware
 module.exports = function (app) {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended:true}));

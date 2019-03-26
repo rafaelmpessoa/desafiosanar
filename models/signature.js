@@ -10,6 +10,7 @@ const signatureSchema = new Schema({
         ref: 'Customer',
         required: true
     },
+    //id do plano no MundiPagg
     _idPlanMP: {
         type: String,
         required: true
@@ -19,6 +20,7 @@ const signatureSchema = new Schema({
         ref: 'Plan',
         required:true
     },
+    //id do Cliente no MundiPagg
     _idCustomerMP: {
         type: String,
         required: true
@@ -31,6 +33,7 @@ const signatureSchema = new Schema({
         type: Object,
         required: true
     },
+    //id da assinatura no MundiPagg
     _idSignatureMP: {
         type: String,
         required: true
@@ -38,6 +41,7 @@ const signatureSchema = new Schema({
 
 });
 
+//validar obj assinatura
 function validateSignature(signature) {
     const schema = {
         _idCustomer: Joi.objectId().required(),
@@ -60,6 +64,7 @@ function validateSignature(signature) {
     return Joi.validate(signature, schema)
 }
 
+//validar o obj para alterar o cartão de Credito
 function validateChangeCreditCard(signature) {
     const schema = {
         subscription_id: Joi.string().required()

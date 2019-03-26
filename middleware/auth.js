@@ -4,7 +4,7 @@ const logger = require('../startup/logger')
 if(process.env.NODE_ENV = 'development') require('dotenv').config()
 const privateKey = process.env.JWT_PRIVATE_KEY
 
-
+//middleware que verifica se no header tem token de autorização para consumo.
 module.exports = function(req,res,next) {
     
     const token = req.header('x-auth-token')

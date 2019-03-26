@@ -1,5 +1,6 @@
 const winston = require('winston')
 
+//configuração do arquivo de logger
 const logger = winston.createLogger({
     level: 'info',
     format: winston.format.json(),

@@ -6,12 +6,14 @@ const planSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    //id de referencia no MundiPagg
     _idPlanMP: {
         type: String,
         required: true
     }
 });
 
+//função para validar o body
 function validateMPlan(plan) {
     const schema = {
         name: Joi.string().required(),
